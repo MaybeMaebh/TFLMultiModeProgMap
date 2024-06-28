@@ -19,6 +19,9 @@ pub fn init(){
 
 pub struct TflData<'a>{
     pub stop_point_sequences:HashMap<String, StopPointSequence<'a>>,
+    pub stop_points:HashMap<String,StopPoint>,
+    pub lines:HashMap<String,StopPoint>,
+    pub modes:HashMap<String,Mode>,
 }
 
 pub struct StopPointSequence<'a> {
