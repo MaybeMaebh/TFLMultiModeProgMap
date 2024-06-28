@@ -32,10 +32,10 @@ pub fn init(){
     //update_cached_req("Line/Route");
     let line_list: Vec<ApiLineRef> = from_reader(BufReader::new(cached_req("Line/Route"))).unwrap();
     for api_line_ref in line_list{
+        println!("precessing line id:{} from tfl",api_line_ref.id);
         #[cfg(debug_assertions)]
         {
-            println!("id:{}",api_line_ref.id);
-            if api_line_ref.id == "110" {
+            if api_line_ref.id == "200" {
                 std::process::exit(0);
             }
         }
@@ -171,10 +171,10 @@ pub enum ServiceType{
     Night
 }
 
-fn cached_req(addr: &str) -> File {
+fn cached_req(addr: &str) -> BufReader<File> {
     let file_path = addr_to_path(addr);
     if file_path.exists() {
-        File::open(file_path).expect("filepath is ok but file cannot be oppened")
+        BufReader::new(File::open(file_path).expect("filepath is ok but file cannot be oppened"))
     } else {
         //println!("getting:{}","https://api.tfl.gov.uk/".to_owned() + addr);
         update_cached_req(addr).unwrap();
